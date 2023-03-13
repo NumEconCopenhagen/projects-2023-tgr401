@@ -1,9 +1,8 @@
-# \[Group name\]
+# \[tgr401\]
 
 **Group members:**
-- A
-- B
-- C
+- tgr401
+
 
 This repository contains  
 1. Inaugural project. 
