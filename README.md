@@ -1,4 +1,4 @@
-# /tgr401/
+# tgr401
 
 **Group members:**
 - tgr401
