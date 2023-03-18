@@ -22,7 +22,7 @@ class HouseholdOptimizationClass:
         par.rho=2.0
         par.nu=0.001
         par.epsilon=1.0
-        par.omega=0.1
+        par.omega=0.5
 
         #b (ii) household production
         par.alpha=0.5
@@ -31,9 +31,21 @@ class HouseholdOptimizationClass:
         #b (iii) wages
         par.w_F=1.0
         par.w_M=1.0
+        par.w_F_vec=np.linspace(0.8,1.2,5)
 
-        #c 
-##ting at lave om i maxutility måske
+        #c targets
+        par.beta0_target=0.4
+        par.beta1_target=-0.1
+
+        #e solution
+        sol.L_M_vec = np.zeros(par.w_F_vec.size)
+        sol.L_M_vec = np.zeros(par.w_F_vec.size)
+        sol.L_M_vec = np.zeros(par.w_F_vec.size)
+        sol.L_M_vec = np.zeros(par.w_F_vec.size)
+
+        sol.beta0 = np.nan
+        sol.beta1 = np.nan
+
     def maxutility(self,L_M,H_M,L_F,H_F):
         """calculates utility for households"""
 
@@ -60,8 +72,7 @@ class HouseholdOptimizationClass:
 
         #utility function
         #e (i) utility
-        utility = Q**(1-par.rho)/(1-par.rho)
-            ###måske skal jeg lave dette om hvis jeg får fejl
+        utility = np.fmax(Q,1e-8)**(1-par.rho)/(1-par.rho)
         #e (ii) disutility
         disutility = par.nu*(T_M**(1+1/par.epsilon)/(1+1/par.epsilon)+T_F**(1+1/par.epsilon)/(1+1/par.epsilon))
         
@@ -72,7 +83,7 @@ class HouseholdOptimizationClass:
         opt: optimal values"""
         par=self.par
         sol=self.sol
-        opt=SimpleNamespace
+        opt=SimpleNamespace()
 
         #a possible work combinations
         x = np.linspace(0,24,49)
@@ -87,11 +98,11 @@ class HouseholdOptimizationClass:
         u = self.maxutility(L_M,H_M,L_F,H_F)
 
         #c set constraints
-        I = L_M+H_M>24 or L_F+H_F>24
+        I = (L_M+H_M > 24) | (L_F+H_F > 24)
         u[I]=-np.inf #if hours worked for each individual surpasses 24, set utility to -infinity
 
         #d maximize
-        j = np.argmax()
+        j = np.argmax(u)
 
         opt.L_M = L_M[j]
         opt.H_M = H_M[j]
