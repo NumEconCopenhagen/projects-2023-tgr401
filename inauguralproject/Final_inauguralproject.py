@@ -117,6 +117,47 @@ class HouseholdOptimizationClass:
         return opt
 
     def solve_continued(self,do_print=False):
-        pass
+
+        par = self.par
+        sol = self.sol
+        opt = SimpleNamespace()
+
+        #create objective function
+        def objective(x): 
+            L_M, H_M, L_F, H_F = x
+            return -self.maxutility(L_M, H_M, L_F, H_F)
+        
+        obj = lambda x: objective(x)
+        #set constraints
+        constraint_m= lambda x: 24-x[0]-x[1] #ensures total work does not go above 24
+        constraint_f= lambda x: 24-x[2]-x[3]
+        constraints = ({'type':'ineq','fun': constraint_m},{'type':'ineq','fun':constraint_f})
+        #initial guess
+        guess = [1]*4
+        #bounds for L and H variables
+        bounds = [(0,24)]*4
+
+        #optimization
+        result = optimize.minimize(obj,guess,method='SLSQP',bounds=bounds,constraints=constraints)
+
+        #save output
+        L_M_opt, H_M_opt, L_F_opt, H_F_opt = result.x
+
+        opt.L_M = L_M_opt
+        opt.H_M = H_M_opt
+        opt.L_F = L_F_opt
+        opt.H_F = H_F_opt
+        
+
+        #print results
+        if do_print:
+            print("Optimal Solution:")
+            print("L_M = {:.2f}".format(opt.L_M))
+            print("H_M = {:.2f}".format(opt.H_M))
+            print("L_F = {:.2f}".format(opt.L_F))
+            print("H_F = {:.2f}".format(opt.H_F))
+    
+
+        return opt
 
 
