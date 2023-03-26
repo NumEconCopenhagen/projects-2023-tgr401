@@ -7,7 +7,7 @@ from scipy import optimize
 import pandas as pd 
 import matplotlib.pyplot as plt
 
-#press the arrows to the left of the function to open
+#Original model
 class HouseholdOptimizationClass:
     def __init__(self):
         """setting up variables in model
@@ -213,7 +213,9 @@ class HouseholdOptimizationClass:
         print(f' beta differences: {(par.beta0_target-sol.beta0)**2+(par.beta1_target-sol.beta1)**2:.3}')
         print(f' alpha: {opt.alpha:.3}, sigma: {opt.sigma:.3}, beta0: {sol.beta0:.3}, beta1: {sol.beta1:.3}')
 
+        return opt.alpha, opt.sigma
 
+#The model with extra disutility for home production for men in the utility function
 class Modelchange:
     def __init__(self):
         """setting up variables in model
@@ -284,7 +286,8 @@ class Modelchange:
         disutility = par.nu*(T_M**(1+1/par.epsilon)/(1+1/par.epsilon)+T_F**(1+1/par.epsilon)/(1+1/par.epsilon))
         
         #disutility for men
-        men_disutility=par.nu*55*H_M**(1+1/par.epsilon)/(1+1/par.epsilon)
+        men_disutility=55*par.nu*H_M**(1+1/par.epsilon)/(1+1/par.epsilon)
+
         return utility-disutility-men_disutility
 
     def solve_discrete(self,do_print=False):
@@ -421,8 +424,10 @@ class Modelchange:
         opt.sigma = result.x
         print(f' beta differences: {(par.beta0_target-sol.beta0)**2+(par.beta1_target-sol.beta1)**2:.3}')
         print(f' alpha: {par.alpha:.3}, sigma: {opt.sigma}, beta0: {sol.beta0:.3}, beta1: {sol.beta1:.3}')
+        
+        return opt.sigma
 
-
+#Original model but with a fixed alpha
 class OGModelFixedAlpha:
     def __init__(self):
         """setting up variables in model
@@ -628,3 +633,5 @@ class OGModelFixedAlpha:
         opt.sigma = result.x
         print(f' beta differences: {(par.beta0_target-sol.beta0)**2+(par.beta1_target-sol.beta1)**2:.3}')
         print(f' alpha: {par.alpha:.3}, sigma: {opt.sigma}, beta0: {sol.beta0:.3}, beta1: {sol.beta1:.3}')
+
+        return opt.sigma
