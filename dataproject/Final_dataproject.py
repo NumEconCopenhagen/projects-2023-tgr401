@@ -47,3 +47,49 @@ nan1_api.sort_values(by=['TID','TRANSAKT'], inplace=True)
 
 #Save the data in a csv file
 nan1_api.to_csv('nan1_api.csv', index=False)
+
+dkdata = pd.read_csv('nan1_api.csv')
+del dkdata['PRISENHED']
+
+
+#Ting at gemme og slette
+# Group the data by "TRANSAKT" and "TID", and sum the values
+grouped = nan1_api.groupby(['TRANSAKT', 'TID'])['INDHOLD'].sum()
+
+# Unstack the "TID" column to create a dataframe with years as columns
+df = grouped.unstack(level=-1)
+
+
+# Print the resulting dataframe
+
+
+#mere
+nan1_api.set_index('TID',inplace=True)
+nan1_api.droplevel(0,axis=1).rename_axis(None,axis=1).reset_index()
+pvt_df=pd.pivot_table(nan1_api,index='TID',columns='TRANSAKT').reset_index
+
+
+#Load the dataset again from the csv file
+dkdata=pd.read_csv('nan1_api.csv')
+#Create a table 
+dkbal = dkdata.groupby(['TID', 'TRANSAKT'])['INDHOLD'].mean().unstack(fill_value=0)
+
+dkbal =dkbal.reset_index()
+
+print(dkdata.loc[dkdata['TRANSAKT']=='C'].mean())
+print(dkdata.loc[(dkdata['TRANSAKT'] == 'I') & (dkdata['TID'].between(2008,2010))])
+display(dkbal.loc[[1990,2000]])
+
+empl_roskilde = dkdata.loc[dkdata['TRANSAKT'] == 'X', :]
+
+# Plot the content of the data frame
+empl_roskilde.plot(x='TID',y='INDHOLD',legend=False);
+
+dkbal['NX'].describe()
+print(dkdata.loc[(dkdata['TRANSAKT'] == 'I') & (dkdata['TID'].between(2008,2010))])
+display(dkbal.loc[[1990,2000]])
+
+c_y_ratio = dkdata.loc[(dkdata['TRANSAKT'] == 'C') & (dkdata['TID'] == 2020), 'INDHOLD'].values[0] / dkdata.loc[(dkdata['TRANSAKT'] == 'Y') & (dkdata['TID'] == 2020), 'INDHOLD'].values[0]
+print('C/Y ratio for 2020:', c_y_ratio)
+
+nan1._define_base_params(language='en')
