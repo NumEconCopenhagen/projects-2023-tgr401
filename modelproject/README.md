@@ -1,6 +1,6 @@
 # Model analysis project
 
-Our project is titled **PROJECT TITLE** and is about EXPLAIN.
+Our project is titled **IS/LM model** and is about EXPLAIN.
 
 The **results** of the project can be seen from running [modelproject.ipynb](modelproject.ipynb).
 
