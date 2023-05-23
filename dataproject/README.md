@@ -1,6 +1,6 @@
 # Data analysis project
 
-Our project is titled "**Danish demand and supply 1966-2022**" and is about how the major components in it have changed over time.
+Our project is titled "**Danish demand and supply 1966-2022**" and is about how the major components in the danish economy have changed over time.
 
 The **results** of the project can be seen from running [Final_dataproject.ipynb](Final_dataproject.ipynb).
 

@@ -1,11 +1,11 @@
-# Inaugural project
+# Exam project
 
-This project answers the questions from the inaugural assignment.
+This project answers the quesstions from the exam assignment.
 
-The **results** of the project can be seen from running [Final_inauguralproject.ipynb](Final_inauguralproject.ipynb).
+The **results** of the project can be seen from running [examproject.ipynb](examproject.ipynb).
 
 The rest of the code can be found in the py-file
-[Final_inauguralproject.py](Final_inauguralproject.py).
+[examproject.py](examproject.py).
 
 **Note:** make sure to restart kernel if you want to run a cell again, otherwise the results might change.
 

@@ -1,6 +1,6 @@
 # Model analysis project
 
-Our project is titled **IS-LM model** and is about EXPLAIN.
+The project is titled **IS-LM model** and is about analyzing the demand side of an economy by looking at the relationship between the interest rate and the GDP.
 
 The **results** of the project can be seen from running [Final_modelproject.ipynb](Final_modelproject.ipynb).
 
