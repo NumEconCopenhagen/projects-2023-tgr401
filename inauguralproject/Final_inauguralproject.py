@@ -7,18 +7,18 @@ from scipy import optimize
 import pandas as pd 
 import matplotlib.pyplot as plt
 
-#Original model
+# Original model
 class HouseholdOptimizationClass:
     def __init__(self):
         """setting up variables in model
         par: parameters
         sol: solutions"""
 
-        #a. create namespaces
+        # a. create namespaces
         par=self.par=SimpleNamespace()
         sol=self.sol=SimpleNamespace()
 
-        #b define variables
+        # b define variables
         #b (i) preferences
         par.rho=2.0
         par.nu=0.001
@@ -71,7 +71,7 @@ class HouseholdOptimizationClass:
         T_M = L_M+H_M
         T_F = L_F+H_F
 
-        #utility function
+        # utility function
         #e (i) utility
         utility = np.fmax(Q,1e-8)**(1-par.rho)/(1-par.rho)
         #e (ii) disutility
@@ -129,19 +129,19 @@ class HouseholdOptimizationClass:
             return -self.maxutility(L_M, H_M, L_F, H_F)*100 #we scale the function by 100 to get more accurate results
         
         obj = lambda x: objective(x)
-        #set constraints
+        # set constraints
         constraint_m= lambda x: 24-x[0]-x[1] #ensures total work for each person does not go above 24
         constraint_f= lambda x: 24-x[2]-x[3]
         constraints = ({'type':'ineq','fun': constraint_m},{'type':'ineq','fun':constraint_f})
-        #initial guess for L and H variables
+        # initial guess for L and H variables
         guess = [4.5]*4
-        #bounds for L and H variables
+        # bounds for L and H variables
         bounds = [(0,24)]*4
 
-        #optimization
+        # optimization
         result = optimize.minimize(obj,guess,method='SLSQP',bounds=bounds,constraints=constraints)
 
-        #save output
+        # save output
         L_M_opt, H_M_opt, L_F_opt, H_F_opt = result.x
 
         opt.L_M = L_M_opt
@@ -203,13 +203,14 @@ class HouseholdOptimizationClass:
             self.regression()
             return (par.beta0_target-sol.beta0)**2+(par.beta1_target-sol.beta1)**2
     
-        #use the initial alpha and sigma values as guesses
+        # use the initial alpha and sigma values as guesses
         guess = (par.alpha,par.sigma)
-        #values alpha and sigma can take
+        # values alpha and sigma can take
         bounds = [(0,1),(0,1.5)]
         result = optimize.minimize(min_diff,guess,method="Nelder-Mead",bounds=bounds)
         
         opt.alpha, opt.sigma = result.x
+        # print solutions
         print(f' beta differences: {(par.beta0_target-sol.beta0)**2+(par.beta1_target-sol.beta1)**2:.3}')
         print(f' alpha: {opt.alpha:.3}, sigma: {opt.sigma:.3}, beta0: {sol.beta0:.3}, beta1: {sol.beta1:.3}')
 
@@ -427,7 +428,7 @@ class Modelchange:
         
         return opt.sigma
 
-#Original model but with a fixed alpha
+#Original model but with a fixed alpha of 0.5
 class OGModelFixedAlpha:
     def __init__(self):
         """setting up variables in model
