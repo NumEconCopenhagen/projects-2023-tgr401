@@ -126,7 +126,7 @@ class HouseholdOptimizationClass:
         #create objective function
         def objective(x): 
             L_M, H_M, L_F, H_F = x
-            return -self.maxutility(L_M, H_M, L_F, H_F)*100 #we scale the function by 100 to get more accurate results
+            return -self.maxutility(L_M, H_M, L_F, H_F)*100 # scale the function by 100 to get more accurate results
         
         obj = lambda x: objective(x)
         # set constraints

@@ -2,9 +2,9 @@
 
 This project answers the questions from the inaugural assignment.
 
-The **results** of the project can be seen from running [Final_inauguralproject.ipynb](Final_inauguralproject.ipynb).
+The **results** of the project can be seen from running: [Final_inauguralproject.ipynb](Final_inauguralproject.ipynb).
 
-The rest of the code can be found in the py-file
+The rest of the code can be found in the py-file:
 [Final_inauguralproject.py](Final_inauguralproject.py).
 
 **Note:** make sure to restart kernel if you want to run a cell again, otherwise the results might change.
